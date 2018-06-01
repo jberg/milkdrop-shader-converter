@@ -1,0 +1,288 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0EEFF368186CEF74009139F1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EEFF367186CEF74009139F1 /* OpenGL.framework */; };
+		0EEFF36B186CF0AD009139F1 /* libhlsl2glsl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EEFF364186CEB92009139F1 /* libhlsl2glsl.a */; };
+		0EEFF36D186CF0B2009139F1 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EEFF36C186CF0B2009139F1 /* AGL.framework */; };
+		B34D8D252096A50A0078CFFB /* libglsl_optimizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B34D8D232096A4C60078CFFB /* libglsl_optimizer.a */; };
+		B3B144531D21F177005A06B1 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B144521D21F177005A06B1 /* libstdc++.6.dylib */; };
+		B3E7B8E320C1F8A600448EDC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B8E220C1F8A600448EDC /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0EEFF363186CEB92009139F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0EEFF35F186CEB92009139F1 /* hlslang.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2B951C991135194700DBAF46;
+			remoteInfo = hlsl2glsl;
+		};
+		B34D8D222096A4C60078CFFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B34D8D1E2096A4C50078CFFB /* glsl_optimizer_lib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
+			remoteInfo = glsl_optimizer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0EEFF35F186CEB92009139F1 /* hlslang.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = hlslang.xcodeproj; path = ../hlsl2glslfork/hlslang.xcodeproj; sourceTree = "<group>"; };
+		0EEFF367186CEF74009139F1 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		0EEFF36C186CF0B2009139F1 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = System/Library/Frameworks/AGL.framework; sourceTree = SDKROOT; };
+		B34D8D1E2096A4C50078CFFB /* glsl_optimizer_lib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = glsl_optimizer_lib.xcodeproj; path = "../glsl-optimizer/projects/xcode5/glsl_optimizer_lib.xcodeproj"; sourceTree = "<group>"; };
+		B3B144521D21F177005A06B1 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
+		B3E7B8E220C1F8A600448EDC /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
+		B3E7B8E420C1F9E600448EDC /* MilkdropShaderConverter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MilkdropShaderConverter; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0EEFF344186CE76C009139F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3B144531D21F177005A06B1 /* libstdc++.6.dylib in Frameworks */,
+				0EEFF36D186CF0B2009139F1 /* AGL.framework in Frameworks */,
+				0EEFF36B186CF0AD009139F1 /* libhlsl2glsl.a in Frameworks */,
+				B34D8D252096A50A0078CFFB /* libglsl_optimizer.a in Frameworks */,
+				0EEFF368186CEF74009139F1 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0EEFF33E186CE76C009139F1 = {
+			isa = PBXGroup;
+			children = (
+				B3E7B8E220C1F8A600448EDC /* main.cpp */,
+				B34D8D1E2096A4C50078CFFB /* glsl_optimizer_lib.xcodeproj */,
+				B3B144521D21F177005A06B1 /* libstdc++.6.dylib */,
+				0EEFF36C186CF0B2009139F1 /* AGL.framework */,
+				0EEFF367186CEF74009139F1 /* OpenGL.framework */,
+				0EEFF35F186CEB92009139F1 /* hlslang.xcodeproj */,
+				B3E7B8E420C1F9E600448EDC /* MilkdropShaderConverter */,
+			);
+			sourceTree = "<group>";
+		};
+		0EEFF360186CEB92009139F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0EEFF364186CEB92009139F1 /* libhlsl2glsl.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B34D8D1F2096A4C50078CFFB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B34D8D232096A4C60078CFFB /* libglsl_optimizer.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0EEFF346186CE76C009139F1 /* MilkdropShaderConverter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0EEFF350186CE76C009139F1 /* Build configuration list for PBXNativeTarget "MilkdropShaderConverter" */;
+			buildPhases = (
+				0EEFF343186CE76C009139F1 /* Sources */,
+				0EEFF344186CE76C009139F1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MilkdropShaderConverter;
+			productName = MilkdropShaderConverter;
+			productReference = B3E7B8E420C1F9E600448EDC /* MilkdropShaderConverter */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0EEFF33F186CE76C009139F1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Jordan Berg";
+			};
+			buildConfigurationList = 0EEFF342186CE76C009139F1 /* Build configuration list for PBXProject "MilkdropShaderConverter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0EEFF33E186CE76C009139F1;
+			productRefGroup = 0EEFF33E186CE76C009139F1;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B34D8D1F2096A4C50078CFFB /* Products */;
+					ProjectRef = B34D8D1E2096A4C50078CFFB /* glsl_optimizer_lib.xcodeproj */;
+				},
+				{
+					ProductGroup = 0EEFF360186CEB92009139F1 /* Products */;
+					ProjectRef = 0EEFF35F186CEB92009139F1 /* hlslang.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				0EEFF346186CE76C009139F1 /* MilkdropShaderConverter */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0EEFF364186CEB92009139F1 /* libhlsl2glsl.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libhlsl2glsl.a;
+			remoteRef = 0EEFF363186CEB92009139F1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B34D8D232096A4C60078CFFB /* libglsl_optimizer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libglsl_optimizer.a;
+			remoteRef = B34D8D222096A4C60078CFFB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0EEFF343186CE76C009139F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3E7B8E320C1F8A600448EDC /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0EEFF34E186CE76C009139F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		0EEFF34F186CE76C009139F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		0EEFF351186CE76C009139F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
+				CLANG_CXX_LIBRARY = "libc++";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = MilkdropShaderConverter;
+				USER_HEADER_SEARCH_PATHS = "hlsl2glslfork/include/ glsl-optimizer/src/glsl/";
+			};
+			name = Debug;
+		};
+		0EEFF352186CE76C009139F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++98";
+				CLANG_CXX_LIBRARY = "libc++";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = MilkdropShaderConverter;
+				USER_HEADER_SEARCH_PATHS = "hlsl2glslfork/include/ glsl-optimizer/src/glsl/";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0EEFF342186CE76C009139F1 /* Build configuration list for PBXProject "MilkdropShaderConverter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0EEFF34E186CE76C009139F1 /* Debug */,
+				0EEFF34F186CE76C009139F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0EEFF350186CE76C009139F1 /* Build configuration list for PBXNativeTarget "MilkdropShaderConverter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0EEFF351186CE76C009139F1 /* Debug */,
+				0EEFF352186CE76C009139F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0EEFF33F186CE76C009139F1 /* Project object */;
+}
