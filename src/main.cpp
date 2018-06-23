@@ -7,9 +7,6 @@
 #include <time.h>
 #include <assert.h>
 
-#include <OpenGL/OpenGL.h>
-#include <OpenGL/gl.h>
-#include <OpenGL/CGLTypes.h>
 #include <dirent.h>
 #include <unistd.h>
 
