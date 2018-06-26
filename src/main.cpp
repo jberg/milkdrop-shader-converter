@@ -7,14 +7,11 @@
 #include <time.h>
 #include <assert.h>
 
-#include <OpenGL/OpenGL.h>
-#include <OpenGL/gl.h>
-#include <OpenGL/CGLTypes.h>
 #include <dirent.h>
 #include <unistd.h>
 
-#include "../hlsl2glslfork/include/hlsl2glsl.h"
-#include "../glsl-optimizer/src/glsl/glsl_optimizer.h"
+#include "hlsl2glslfork/include/hlsl2glsl.h"
+#include "glsl-optimizer/src/glsl/glsl_optimizer.h"
 
 static void replace_string (std::string& target, const std::string& search, const std::string& replace, size_t startPos);
 
