@@ -9,10 +9,10 @@ cd milkdrop-shader-converter
 mkdir build; cd build
 
 #To build with a Makefile (default on Linux systems)
-cmake ../src && make
+cmake .. && make
 
 #To build instead with Ninja (if you have it installed)
-cmake -G Ninja ../src && ninja
+cmake -G Ninja .. && ninja
 ```
 
 On Ubuntu 16.04, I had to install the following packages
