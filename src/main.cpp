@@ -1,7 +1,6 @@
 // based on https://github.com/aras-p/hlsl2glslfork/blob/master/tests/hlsl2glsltest/hlsl2glsltest.cpp
-#include <iostream>
+#include <nan.h>
 #define _CRT_SECURE_NO_WARNINGS
-#include <cstdio>
 #include <string>
 #include <vector>
 #include <time.h>
@@ -13,7 +12,10 @@
 #include "hlsl2glslfork/include/hlsl2glsl.h"
 #include "glsl-optimizer/src/glsl/glsl_optimizer.h"
 
-static std::string GetCompiledShaderText(ShHandle parser)
+using v8::FunctionTemplate;
+using v8::String;
+
+static std::string GetCompiledShaderText (ShHandle parser)
 {
     std::string txt = Hlsl2Glsl_GetShader (parser);
 
@@ -121,61 +123,50 @@ static std::string ConvertString (std::string shaderStr,
     return text;
 }
 
-int main (int argc, const char** argv)
-{
+NAN_METHOD(ConvertHLSLString) {
+  if (!info[0]->IsString()) return Nan::ThrowError("Must pass a string");
+  Nan::Utf8String inputShader(info[0]);
 
-    std::string inputStr = "";
-    std::string lineInput;
-    while (getline(std::cin,lineInput)) {
-        inputStr += lineInput + "\n";
-    }
+  Hlsl2Glsl_Initialize ();
 
-    bool logging = false;
+  bool converted = false;
+  bool logging = false;
+  size_t errors = 0;
+  if(logging) printf ("TESTING %s...\n", "fragment");
+  const ETargetVersion version1 = ETargetGLSL_ES_300;
 
-    clock_t time0 = clock();
+  std::string text = ConvertString(*inputShader, "main", version1, ETranslateOpNone);
 
-    Hlsl2Glsl_Initialize ();
+  const char* shaderOutput;
+  if (!text.empty()) {
+      if(logging) printf ("FRAG SHADER: \n %s", text.c_str());
 
-    size_t tests = 1;
-    size_t errors = 0;
-    if(logging) printf ("TESTING %s...\n", "fragment");
-    const ETargetVersion version1 = ETargetGLSL_ES_300;
+      glslopt_ctx* ctx = glslopt_initialize(kGlslTargetOpenGLES30);
+      glslopt_shader* shader = glslopt_optimize (ctx, kGlslOptShaderFragment, text.c_str(), 0);
 
-    std::string text = ConvertString(inputStr, "main", version1, ETranslateOpNone);
+      const char* errorLog;
+      if (glslopt_get_status (shader)) {
+          shaderOutput = glslopt_get_output (shader);
 
-    if (text.empty())
-        ++errors;
-    else {
-        if(logging) printf ("FRAG SHADER: \n %s", text.c_str());
+          converted = true;
+          info.GetReturnValue().Set(Nan::CopyBuffer(shaderOutput, strlen(shaderOutput)).ToLocalChecked());
+      } else if(logging) {
+          errorLog = glslopt_get_log (shader);
+          printf ("ERROR LOG: \n %s", errorLog);
+      }
+      glslopt_shader_delete (shader);
+      glslopt_cleanup (ctx);
+  }
 
-        glslopt_ctx* ctx = glslopt_initialize(kGlslTargetOpenGLES30);
+  Hlsl2Glsl_Shutdown();
 
-        glslopt_shader* shader = glslopt_optimize (ctx, kGlslOptShaderFragment, text.c_str(), 0);
-        const char* newSource;
-        const char* errorLog;
-        if (glslopt_get_status (shader)) {
-            newSource = glslopt_get_output (shader);
-
-            if(logging) printf ("OPTIMIZED FRAG SHADER: \n");
-            printf ("%s", newSource);
-        } else {
-            errorLog = glslopt_get_log (shader);
-
-            if(logging) printf ("ERROR LOG: \n %s", errorLog);
-        }
-        glslopt_shader_delete (shader);
-        glslopt_cleanup (ctx);
-
-    }
-    clock_t time1 = clock();
-    float t = float(time1-time0) / float(CLOCKS_PER_SEC);
-    if (errors != 0) {
-        if(logging) printf ("%i tests, %i FAILED, %.2fs\n", (int)tests, (int)errors, t);\
-    }
-    else {
-        if(logging) printf ("%i tests succeeded, %.2fs\n", (int)tests, t);
-    }
-    Hlsl2Glsl_Shutdown();
-
-    return errors ? 1 : 0;
+  if (!converted) {
+    info.GetReturnValue().Set(Nan::Undefined());
+  }
 }
+
+NAN_MODULE_INIT(InitModule) {
+  Nan::Set(target, Nan::New<String>("convertHLSLString").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(ConvertHLSLString)).ToLocalChecked());
+}
+
+NODE_MODULE(MilkdropShaderConverter, InitModule)

@@ -1,3 +1,2 @@
-*.xcworkspace
-xcuserdata
 /build
+/node_modules
