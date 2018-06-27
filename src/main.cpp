@@ -13,54 +13,6 @@
 #include "hlsl2glslfork/include/hlsl2glsl.h"
 #include "glsl-optimizer/src/glsl/glsl_optimizer.h"
 
-static void replace_string (std::string& target, const std::string& search, const std::string& replace, size_t startPos);
-
-static bool ReadStringFromFile (const char* pathName, std::string& output)
-{
-    FILE* file = fopen( pathName, "rb" );
-    if (file == NULL)
-        return false;
-
-    fseek(file, 0, SEEK_END);
-    long length = ftell(file);
-    fseek(file, 0, SEEK_SET);
-    if (length < 0)
-    {
-        fclose( file );
-        return false;
-    }
-
-    output.resize(length);
-    size_t readLength = fread(&*output.begin(), 1, length, file);
-
-    fclose(file);
-
-    if (readLength != length)
-    {
-        output.clear();
-        return false;
-    }
-
-    replace_string(output, "\r\n", "\n", 0);
-
-    return true;
-}
-
-
-static void replace_string (std::string& target, const std::string& search, const std::string& replace, size_t startPos)
-{
-    if (search.empty())
-        return;
-
-    std::string::size_type p = startPos;
-    while ((p = target.find (search, p)) != std::string::npos)
-    {
-        target.replace (p, search.size (), replace);
-        p += replace.size ();
-    }
-}
-
-
 static std::string GetCompiledShaderText(ShHandle parser)
 {
     std::string txt = Hlsl2Glsl_GetShader (parser);
@@ -81,11 +33,10 @@ static std::string GetCompiledShaderText(ShHandle parser)
     return txt;
 }
 
-
-static std::string TestString (std::string shaderStr,
-                               const char* entryPoint,
-                               ETargetVersion version,
-                               unsigned options)
+static std::string ConvertString (std::string shaderStr,
+                                  const char* entryPoint,
+                                  ETargetVersion version,
+                                  unsigned options)
 {
     assert(version != ETargetVersionCount);
 
@@ -173,25 +124,10 @@ static std::string TestString (std::string shaderStr,
 int main (int argc, const char** argv)
 {
 
-    std::string inputStr;
-    if (argc < 2)
-    {
-        inputStr = "";
-        std::string lineInput;
-        while (getline(std::cin,lineInput)) {
-            inputStr += lineInput + "\n";
-        }
-    }
-    else {
-        std::string fragShaderFile = argv[1];
-
-        std::string input;
-        if (!ReadStringFromFile (fragShaderFile.c_str(), inputStr))
-        {
-            printf ("  failed to read input file\n");
-            return 1;
-        }
-
+    std::string inputStr = "";
+    std::string lineInput;
+    while (getline(std::cin,lineInput)) {
+        inputStr += lineInput + "\n";
     }
 
     bool logging = false;
@@ -205,7 +141,7 @@ int main (int argc, const char** argv)
     if(logging) printf ("TESTING %s...\n", "fragment");
     const ETargetVersion version1 = ETargetGLSL_ES_300;
 
-    std::string text = TestString(inputStr, "main", version1, ETranslateOpNone);
+    std::string text = ConvertString(inputStr, "main", version1, ETranslateOpNone);
 
     if (text.empty())
         ++errors;
