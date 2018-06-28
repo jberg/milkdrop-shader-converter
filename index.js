@@ -1,1 +1,1 @@
-module.exports = require('bindings')('MilkdropShaderConverter');
+module.exports = require('./build/Release/MilkdropShaderConverter.node');
