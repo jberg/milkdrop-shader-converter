@@ -1,6 +1,7 @@
 [submodule "glsl-optimizer"]
-	path = glsl-optimizer
-	url = https://github.com/aras-p/glsl-optimizer
+  path = glsl-optimizer
+  url = https://github.com/jberg/glsl-optimizer
+  branch = cmake-remove-tests
 [submodule "hlsl2glslfork"]
-	path = hlsl2glslfork
-	url = https://github.com/aras-p/hlsl2glslfork
+  path = hlsl2glslfork
+  url = https://github.com/aras-p/hlsl2glslfork
