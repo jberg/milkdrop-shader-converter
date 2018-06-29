@@ -1,6 +1,6 @@
 {
   "name": "milkdrop-shader-converter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Converts Milkdrop shaders from HLSL to GLSL for use in Butterchurn Visualizer",
   "scripts": {
     "install": "cmake-js compile",
