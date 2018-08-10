@@ -4,4 +4,5 @@
   branch = cmake-remove-tests
 [submodule "hlsl2glslfork"]
   path = hlsl2glslfork
-  url = https://github.com/aras-p/hlsl2glslfork
+  url = https://github.com/jberg/hlsl2glslfork
+  branch = cmake-remove-tests
