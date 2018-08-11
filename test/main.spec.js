@@ -1,4 +1,4 @@
-const MilkdropShaderConverter = require('bindings')('MilkdropShaderConverter');
+const MilkdropShaderConverter = require('../build/Release/MilkdropShaderConverter.node');
 
 describe('MilkdropShaderConverter', () => {
   const HLSLShader = `float4 xlat_main (float2 uv : TEXCOORD0) : COLOR0 {
