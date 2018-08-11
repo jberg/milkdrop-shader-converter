@@ -127,6 +127,11 @@ NAN_METHOD(ConvertHLSLString) {
   if (!info[0]->IsString()) return Nan::ThrowError("Must pass a string");
   Nan::Utf8String inputShader(info[0]);
 
+  bool optimize = true;
+  if (info.Length() > 1 && info[1]->IsBoolean()) {
+    optimize = info[1]->BooleanValue();
+  }
+
   Hlsl2Glsl_Initialize ();
 
   bool converted = false;
@@ -137,31 +142,35 @@ NAN_METHOD(ConvertHLSLString) {
 
   std::string text = ConvertString(*inputShader, "main", version1, ETranslateOpNone);
 
-  const char* shaderOutput;
-  if (!text.empty()) {
-      if(logging) printf ("FRAG SHADER: \n %s", text.c_str());
+  if (optimize) {
+    const char* shaderOutput;
+    if (!text.empty()) {
+        if(logging) printf ("FRAG SHADER: \n %s", text.c_str());
 
-      glslopt_ctx* ctx = glslopt_initialize(kGlslTargetOpenGLES30);
-      glslopt_shader* shader = glslopt_optimize (ctx, kGlslOptShaderFragment, text.c_str(), 0);
+        glslopt_ctx* ctx = glslopt_initialize(kGlslTargetOpenGLES30);
+        glslopt_shader* shader = glslopt_optimize (ctx, kGlslOptShaderFragment, text.c_str(), 0);
 
-      const char* errorLog;
-      if (glslopt_get_status (shader)) {
-          shaderOutput = glslopt_get_output (shader);
+        const char* errorLog;
+        if (glslopt_get_status (shader)) {
+            shaderOutput = glslopt_get_output (shader);
 
-          converted = true;
-          info.GetReturnValue().Set(Nan::CopyBuffer(shaderOutput, strlen(shaderOutput)).ToLocalChecked());
-      } else if(logging) {
-          errorLog = glslopt_get_log (shader);
-          printf ("ERROR LOG: \n %s", errorLog);
-      }
-      glslopt_shader_delete (shader);
-      glslopt_cleanup (ctx);
-  }
+            converted = true;
+            info.GetReturnValue().Set(Nan::CopyBuffer(shaderOutput, strlen(shaderOutput)).ToLocalChecked());
+        } else if(logging) {
+            errorLog = glslopt_get_log (shader);
+            printf ("ERROR LOG: \n %s", errorLog);
+        }
+        glslopt_shader_delete (shader);
+        glslopt_cleanup (ctx);
+    }
 
-  Hlsl2Glsl_Shutdown();
+    Hlsl2Glsl_Shutdown();
 
-  if (!converted) {
-    info.GetReturnValue().Set(Nan::Undefined());
+    if (!converted) {
+      info.GetReturnValue().Set(Nan::Undefined());
+    }
+  } else {
+    info.GetReturnValue().Set(Nan::CopyBuffer(text.c_str(), strlen(text.c_str())).ToLocalChecked());
   }
 }
 
