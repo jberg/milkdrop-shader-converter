@@ -3,8 +3,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <string>
 #include <vector>
-#include <time.h>
-#include <assert.h>
+#include <stdexcept>
 
 #include <dirent.h>
 #include <unistd.h>
@@ -40,8 +39,6 @@ static std::string ConvertString (std::string shaderStr,
                                   ETargetVersion version,
                                   unsigned options)
 {
-    assert(version != ETargetVersionCount);
-
     const char* sourceStr = shaderStr.c_str();
 
     ShHandle parser = Hlsl2Glsl_ConstructCompiler (EShLangFragment);
@@ -74,8 +71,7 @@ static std::string ConvertString (std::string shaderStr,
 
                 if (!isascii(c))
                 {
-                    printf ("  contains non-ascii '%c' (0x%02X)\n", c, c);
-                    text = "";
+                    throw std::runtime_error(std::string("Contains non-ascii character: ") + c);
                 }
             }
 
@@ -108,14 +104,12 @@ static std::string ConvertString (std::string shaderStr,
         }
         else
         {
-            printf ("  translate error: %s\n", infoLog);
-            text = "";
+            throw std::runtime_error(std::string("HLSL translation error:") + infoLog);
         }
     }
     else
     {
-        printf ("  parse error: %s\n", infoLog);
-        text = "";
+        throw std::runtime_error(std::string("HLSL parse error:") + infoLog);
     }
 
     Hlsl2Glsl_DestructCompiler (parser);
@@ -132,45 +126,53 @@ NAN_METHOD(ConvertHLSLString) {
     optimize = info[1]->BooleanValue();
   }
 
-  Hlsl2Glsl_Initialize ();
+  try {
+      Hlsl2Glsl_Initialize ();
 
-  bool converted = false;
-  bool logging = false;
-  size_t errors = 0;
-  if(logging) printf ("TESTING %s...\n", "fragment");
-  const ETargetVersion version1 = ETargetGLSL_ES_300;
+      bool converted = false;
+      // bool logging = false;
+      size_t errors = 0;
+      // if(logging) printf ("TESTING %s...\n", "fragment");
+      const ETargetVersion version1 = ETargetGLSL_ES_300;
 
-  std::string text = ConvertString(*inputShader, "main", version1, ETranslateOpNone);
+      std::string text = ConvertString(*inputShader, "main", version1, ETranslateOpNone);
 
-  if (optimize) {
-    const char* shaderOutput;
-    if (!text.empty()) {
-        if(logging) printf ("FRAG SHADER: \n %s", text.c_str());
+      if (optimize) {
+        const char* shaderOutput;
+        if (!text.empty()) {
+            // if(logging) printf ("FRAG SHADER: \n %s", text.c_str());
 
-        glslopt_ctx* ctx = glslopt_initialize(kGlslTargetOpenGLES30);
-        glslopt_shader* shader = glslopt_optimize (ctx, kGlslOptShaderFragment, text.c_str(), 0);
+            glslopt_ctx* ctx = glslopt_initialize(kGlslTargetOpenGLES30);
+            glslopt_shader* shader = glslopt_optimize (ctx, kGlslOptShaderFragment, text.c_str(), 0);
 
-        const char* errorLog;
-        if (glslopt_get_status (shader)) {
-            shaderOutput = glslopt_get_output (shader);
+            const char* errorLog;
+            if (glslopt_get_status (shader)) {
+                shaderOutput = glslopt_get_output (shader);
 
-            converted = true;
-            info.GetReturnValue().Set(Nan::CopyBuffer(shaderOutput, strlen(shaderOutput)).ToLocalChecked());
-        } else if(logging) {
-            errorLog = glslopt_get_log (shader);
-            printf ("ERROR LOG: \n %s", errorLog);
+                converted = true;
+                info.GetReturnValue().Set(Nan::CopyBuffer(shaderOutput, strlen(shaderOutput)).ToLocalChecked());
+            }
+            // else if(logging) {
+            //     printf ("ERROR LOG: \n %s", glslopt_get_log (shader));
+            // }
+            glslopt_shader_delete (shader);
+            glslopt_cleanup (ctx);
         }
-        glslopt_shader_delete (shader);
-        glslopt_cleanup (ctx);
-    }
 
-    Hlsl2Glsl_Shutdown();
+        Hlsl2Glsl_Shutdown();
 
-    if (!converted) {
-      info.GetReturnValue().Set(Nan::Undefined());
-    }
-  } else {
-    info.GetReturnValue().Set(Nan::CopyBuffer(text.c_str(), strlen(text.c_str())).ToLocalChecked());
+        if (!converted) {
+          info.GetReturnValue().Set(Nan::Undefined());
+        }
+      } else {
+        info.GetReturnValue().Set(Nan::CopyBuffer(text.c_str(), strlen(text.c_str())).ToLocalChecked());
+      }
+  }
+  catch (const std::runtime_error& ex) {
+    return Nan::ThrowError(ex.what());
+  }
+  catch(...) {
+    return Nan::ThrowError("An error occurred translating HLSL");
   }
 }
 

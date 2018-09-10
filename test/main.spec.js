@@ -60,7 +60,7 @@ void main() {
     expect(MilkdropShaderConverter.convertHLSLString(HLSLShader, false).toString().trim()).toEqual(GLSLShaderUnoptimized.trim());
   });
 
-  it('returnes undefined if shader cannot be converted', () => {
-    expect(MilkdropShaderConverter.convertHLSLString("")).toBeUndefined;
+  it('throws error if shader cannot be converted', () => {
+    expect(() => MilkdropShaderConverter.convertHLSLString("")).toThrow(new Error("HLSL parse error:(1): ERROR: '' : syntax error syntax error\n"));
   });
 });
